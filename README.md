@@ -1,0 +1,2 @@
+- npm init (answer the questions)
+- npm install -D webpack

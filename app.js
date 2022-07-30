@@ -1,9 +1,3 @@
-const a = 5;
+export const a = 5;
 
-const b = 10;
-
-
-module.exports = {
-    a,
-    b
-}
+export const b = 10;

@@ -1,6 +1,26 @@
-// import app from './app';
-const app = require("./app.js")
+import { a, b } from './app';
 
-console.log("hello")
+// class Counter extends HTMLElement {
+//   #xValue = 0;
 
-console.log(app);
+//   get #x() {
+//     return this.#xValue;
+//   }
+
+//   set #x(value) {
+//     this.#xValue = value;
+//     window.requestAnimationFrame(this.#render.bind(this));
+//   }
+
+//   #clicked() {
+//     this.#x++;
+//   }
+
+//   #render() {
+
+//   }
+// }
+
+console.log('hello');
+
+console.log(a + b);
