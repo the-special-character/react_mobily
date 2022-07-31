@@ -13,5 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'react/function-component-definition': 0,
+  },
 };
