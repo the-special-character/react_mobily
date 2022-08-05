@@ -53,17 +53,19 @@ export default class Todo extends Component {
     });
   };
 
+  filterTodo = () => {};
+
   render() {
     const { todoList } = this.state;
 
     return (
-      <div className="container">
-        <h1>Todo App</h1>
+      <div className="wrapper">
+        <h1 className="text-center py-10">Todo App</h1>
         <form onSubmit={this.addTodo}>
           <input ref={this.todoTextRef} type="text" />
           <button type="submit">Add Todo</button>
         </form>
-        <div className="fullWidth">
+        <div>
           {todoList.map(todoItem => (
             <div key={todoItem.id} className="todoItem">
               <input
@@ -85,6 +87,17 @@ export default class Todo extends Component {
               </button>
             </div>
           ))}
+        </div>
+        <div>
+          <button type="button" onClick={() => this.filterTodo()}>
+            All
+          </button>
+          <button type="button" onClick={() => this.filterTodo()}>
+            Pending
+          </button>
+          <button type="button" onClick={() => this.filterTodo()}>
+            Completed
+          </button>
         </div>
       </div>
     );
