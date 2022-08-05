@@ -1,5 +1,8 @@
 import React, { Component, createRef } from 'react';
 import './style.css';
+import TodoFilter from './todoFilter';
+import TodoForm from './todoForm';
+import TodoList from './todoList';
 
 export default class Todo extends Component {
   constructor(props) {
@@ -7,6 +10,7 @@ export default class Todo extends Component {
     this.todoTextRef = createRef();
     this.state = {
       todoList: [],
+      filterType: 'all',
     };
   }
 
@@ -53,74 +57,23 @@ export default class Todo extends Component {
     });
   };
 
-  filterTodo = () => {};
+  filterTodo = event => {
+    this.setState({ filterType: event.target.name });
+  };
 
   render() {
-    const { todoList } = this.state;
+    console.log('todo render');
 
     return (
       <div className="wrapper">
         <h1 className="text-center py-10">Todo App</h1>
-        <form onSubmit={this.addTodo}>
-          <input ref={this.todoTextRef} type="text" />
-          <button className="btn rounded-l-none" type="submit">
-            Add Todo
-          </button>
-        </form>
-        <div className="w-full flex-1">
-          {todoList.map(todoItem => (
-            <div
-              key={todoItem.id}
-              className="flex items-center p-4 hover:bg-white"
-            >
-              <input
-                type="checkbox"
-                name="isDone"
-                id="isDone"
-                checked={todoItem.isDone}
-                onChange={() => this.toggleCompleteTodo(todoItem)}
-              />
-              <p
-                className="flex-1 px-4 line-clamp-1"
-                style={{
-                  textDecoration: todoItem.isDone ? 'line-through' : 'none',
-                }}
-              >
-                {todoItem.text}
-              </p>
-              <button
-                className="btn"
-                type="button"
-                onClick={() => this.deleteTodo(todoItem)}
-              >
-                Delete Todo
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="w-full flex gap-1">
-          <button
-            className="btn flex-1 rounded-none"
-            type="button"
-            onClick={() => this.filterTodo()}
-          >
-            All
-          </button>
-          <button
-            className="btn flex-1 rounded-none"
-            type="button"
-            onClick={() => this.filterTodo()}
-          >
-            Pending
-          </button>
-          <button
-            className="btn flex-1 rounded-none"
-            type="button"
-            onClick={() => this.filterTodo()}
-          >
-            Completed
-          </button>
-        </div>
+        <TodoForm addTodo={this.addTodo} ref={this.todoTextRef} />
+        <TodoList
+          {...this.state}
+          deleteTodo={this.deleteTodo}
+          toggleCompleteTodo={this.toggleCompleteTodo}
+        />
+        <TodoFilter filterTodo={this.filterTodo} />
       </div>
     );
   }

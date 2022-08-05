@@ -15,5 +15,6 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'react/function-component-definition': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };
