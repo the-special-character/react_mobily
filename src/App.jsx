@@ -1,5 +1,4 @@
-import React, { createRef, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useRef } from 'react';
 import Child from './Child';
 
 // Mounting
@@ -11,135 +10,62 @@ import Child from './Child';
 
 // Updating
 // 1. getDerivedStateFromProps
-// 2. shouldComponentUpdate
+// 2. shouldComponentUpdate(memo)
 // 3. render
-// 4. getSnapshotBeforeUpdate
+// 4. getSnapshotBeforeUpdate // not possible in hooks
 // 5. componentDidUpdate
 
 // unmounting
 // 1. componentWillUnmount
 
 // error
-// 1. getDerivedStateFromError
-// 2. componentDidCatch
+// 1. getDerivedStateFromError // not possible in hooks
+// 2. componentDidCatch // not possible in hooks
 
-class App extends PureComponent {
-  // base on prop value if you want to define state
-  // analytics purpose
-  //  call only once
-  constructor(props) {
-    console.log('constructor');
-    super(props);
+const App = () => {
+  const [counter, setCounter] = useState(0);
+  const [number, setNumber] = useState(0);
+  const isMounted = useRef(false);
 
-    this.state = {
-      counter: 0,
-      user: null,
-      //   greet: `Hello ${props.name}`,
-    };
+  // component Did Mount
+  // Component Did Update
+  // Component Will Unmout
 
-    this.h1Ref = createRef();
-
-    console.log(document.getElementById('header'));
-
-    // write a logic to capture information
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    console.log('getDerivedStateFromProps');
-    console.log(document.getElementById('header'));
-    if (!state.greet) {
-      return {
-        greet: `Hello ${props.name}`,
-      };
+  useEffect(() => {
+    if (isMounted.current) {
+      console.log('Component Did update');
     }
-    return null;
-  }
+  }, [counter, number]);
 
-  //   to manupulate dom
-  //
-  async componentDidMount() {
-    console.log(document.getElementById('header'));
-    this.h1Ref.current.style = 'color: red';
+  // component Did Mount
+  useEffect(() => {
+    console.log('Component Did mount');
+    isMounted.current = true;
+  }, []);
 
-    const res = await fetch('http://localhost:3000/user');
-    const json = await res.json();
-
-    console.log(json);
-    this.setState({ user: json });
-
-    // server call
-    // set state
-  }
-
-  getSnapshotBeforeUpdate() {
-    return 'hello from getSnapshotBeforeUpdate';
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(snapshot);
-  }
-
-  static getDerivedStateFromError(error) {
-    return {
-      error,
-    };
-  }
-
-  componentDidCatch(error, info) {
-    console.log(info);
-  }
-
-  increment = () => {
-    this.setState(({ counter }) => ({ counter: counter + 1 }));
-  };
-
-  decrement = () => {
-    this.setState(({ counter }) => ({ counter: counter - 1 }));
-  };
-
-  changeGreet = () => {
-    this.setState((state, { name }) => ({ greet: `namste ${name}` }));
-  };
-
-  render() {
-    console.log('render');
-    const { counter, greet, user, error } = this.state;
-
-    if (error) {
-      return <h1>{error.message}</h1>;
-    }
-
-    return (
-      <>
-        <h1 ref={this.h1Ref}>{greet}</h1>
-        {user && (
-          <>
-            <p>{user.name}</p>
-            <p>{user.age}</p>
-            <p>{user.gender}</p>
-          </>
-        )}
-
-        {(counter < 5 || counter > 10) && <Child />}
-
-        <button type="button" onClick={this.changeGreet}>
-          Change Greet Method
-        </button>
-
-        <button type="button" onClick={this.increment}>
+  return (
+    <>
+      <div className="flex text-6xl">
+        <button type="button" onClick={() => setNumber(val => val + 1)}>
           +
         </button>
-        {counter}
-        <button type="button" onClick={this.decrement}>
+        <p className="px-6">{`Number: ${number}`}</p>
+        <button type="button" onClick={() => setNumber(val => val - 1)}>
           -
         </button>
-      </>
-    );
-  }
-}
-
-App.propTypes = {
-  name: PropTypes.string.isRequired,
+      </div>
+      <div className="flex text-6xl">
+        <button type="button" onClick={() => setCounter(val => val + 1)}>
+          +
+        </button>
+        <p className="px-6">{`Counter: ${counter}`}</p>
+        <button type="button" onClick={() => setCounter(val => val - 1)}>
+          -
+        </button>
+      </div>
+      {counter < 5 && <Child />}
+    </>
+  );
 };
 
 export default App;

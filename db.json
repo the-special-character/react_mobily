@@ -1,34 +1,24 @@
 {
   "todoList": [
     {
-      "text": "get todo",
+      "text": "asd",
       "isDone": true,
-      "id": 1
+      "id": 10
+    },
+    {
+      "text": "sadff",
+      "isDone": false,
+      "id": 11
     },
     {
       "text": "asdf",
-      "isDone": true,
-      "id": 2
+      "isDone": false,
+      "id": 12
     },
     {
       "text": "asdf",
-      "isDone": true,
-      "id": 3
-    },
-    {
-      "text": "asdf",
-      "isDone": true,
-      "id": 4
-    },
-    {
-      "text": "asdf",
-      "isDone": true,
-      "id": 5
-    },
-    {
-      "text": "asdf",
-      "isDone": true,
-      "id": 6
+      "isDone": false,
+      "id": 13
     }
   ],
   "user": {

@@ -1,46 +1,20 @@
-import React, { PureComponent } from 'react';
-// import shallowCompare from 'react-addons-shallow-compare'; // ES6
+import React, { useEffect } from 'react';
 
-export default class Child extends PureComponent {
-  //   shouldComponentUpdate(nextProps, nextState) {
-  //     return shallowCompare(this, nextProps, nextState);
-  //     // if (this.props !== nextProps || this.state !== nextState) {
-  //     //   return true;
-  //     // }
-  //     // return false;
-  //   }
+const Child = () => {
+  useEffect(() => {
+    const mouseMove = () => {
+      console.log('mouseMove');
+    };
 
-  state = {
-    counter: 0,
-  };
+    document.addEventListener('mousemove', mouseMove);
 
-  componentDidMount() {
-    document.addEventListener('mousemove', this.mouseMove);
+    // component will unmount
+    return () => {
+      document.removeEventListener('mousemove', mouseMove);
+    };
+  }, []);
 
-    this.interval = setInterval(() => {
-      this.setState(({ counter }) => ({ counter: counter + 1 }));
-    }, 1000);
-  }
+  return <h1>Child</h1>;
+};
 
-  componentWillUnmount() {
-    document.removeEventListener('mousemove', this.mouseMove);
-    clearInterval(this.interval);
-  }
-
-  mouseMove = () => {
-    console.log('mouse move');
-  };
-
-  render() {
-    console.log('render child component');
-    const { counter } = this.state;
-    if (counter > 10) throw new Error('something wrong');
-
-    return (
-      <div>
-        <h2>Child Component</h2>
-        <p>{counter}</p>
-      </div>
-    );
-  }
-}
+export default Child;

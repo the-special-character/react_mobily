@@ -8,20 +8,24 @@ const TodoList = ({
   deleteTodo,
   deleteTodoState,
   updateTodoState,
-}) => (
-  <div className="w-full flex-1">
-    {todoList.map(todoItem => (
-      <TodoItem
-        key={todoItem.id}
-        todoItem={todoItem}
-        toggleCompleteTodo={toggleCompleteTodo}
-        deleteTodo={deleteTodo}
-        deleteTodoState={deleteTodoState.find(x => x.id === todoItem.id)}
-        updateTodoState={updateTodoState.find(x => x.id === todoItem.id)}
-      />
-    ))}
-  </div>
-);
+}) => {
+  console.log('TodoList render');
+
+  return (
+    <div className="w-full flex-1">
+      {todoList.map(todoItem => (
+        <TodoItem
+          key={todoItem.id}
+          todoItem={todoItem}
+          toggleCompleteTodo={toggleCompleteTodo}
+          deleteTodo={deleteTodo}
+          deleteTodoState={deleteTodoState.find(x => x.id === todoItem.id)}
+          updateTodoState={updateTodoState.find(x => x.id === todoItem.id)}
+        />
+      ))}
+    </div>
+  );
+};
 
 TodoList.propTypes = {
   toggleCompleteTodo: PropTypes.func.isRequired,
