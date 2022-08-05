@@ -42,6 +42,8 @@ export default class Todo extends Component {
   };
 
   toggleCompleteTodo = async todoItem => {
+    const state = 'update_todo';
+    this.loadingState({ state, id: todoItem.id });
     try {
       const res = await axiosInstance.put(`todoList/${todoItem.id}`, {
         ...todoItem,
@@ -59,7 +61,10 @@ export default class Todo extends Component {
           ],
         };
       });
-    } catch (error) {}
+      this.successState({ state, id: todoItem.id });
+    } catch (error) {
+      this.errorState({ state, id: todoItem.id, error });
+    }
   };
 
   deleteTodo = async todoItem => {
@@ -147,6 +152,8 @@ export default class Todo extends Component {
 
     const deleteTodo = appState.filter(x => x.state === 'delete_todo');
 
+    const updateTodo = appState.filter(x => x.state === 'update_todo');
+
     if (!loadTodo?.isLoading && loadTodo?.errorMessage) {
       return <h1>{loadTodo?.errorMessage}</h1>;
     }
@@ -168,6 +175,7 @@ export default class Todo extends Component {
               deleteTodo={this.deleteTodo}
               toggleCompleteTodo={this.toggleCompleteTodo}
               deleteTodoState={deleteTodo}
+              updateTodoState={updateTodo}
             />
             <TodoFilter filterTodo={this.loadTodo} />
           </>

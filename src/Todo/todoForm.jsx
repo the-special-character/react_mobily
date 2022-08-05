@@ -19,6 +19,8 @@ const TodoForm = forwardRef(({ addTodo, addTodoState }, ref) => (
   </>
 ));
 
+TodoForm.displayName = 'TodoForm';
+
 TodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
   addTodoState: PropTypes.shape({

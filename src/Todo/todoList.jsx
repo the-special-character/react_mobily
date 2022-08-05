@@ -7,6 +7,7 @@ const TodoList = ({
   toggleCompleteTodo,
   deleteTodo,
   deleteTodoState,
+  updateTodoState,
 }) => (
   <div className="w-full flex-1">
     {todoList.map(todoItem => (
@@ -16,6 +17,7 @@ const TodoList = ({
         toggleCompleteTodo={toggleCompleteTodo}
         deleteTodo={deleteTodo}
         deleteTodoState={deleteTodoState.find(x => x.id === todoItem.id)}
+        updateTodoState={updateTodoState.find(x => x.id === todoItem.id)}
       />
     ))}
   </div>
@@ -32,6 +34,14 @@ TodoList.propTypes = {
     }),
   ).isRequired,
   deleteTodoState: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      state: PropTypes.string,
+      isLoading: PropTypes.bool,
+      errorMessage: PropTypes.string,
+    }),
+  ).isRequired,
+  updateTodoState: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       state: PropTypes.string,

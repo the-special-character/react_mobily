@@ -6,12 +6,15 @@ const TodoItem = ({
   toggleCompleteTodo,
   deleteTodo,
   deleteTodoState,
+  updateTodoState,
 }) => (
   <div key={todoItem.id} className="flex items-center p-4 hover:bg-white">
     <input
       type="checkbox"
       name="isDone"
       id="isDone"
+      className="disabled:accent-gray-500"
+      disabled={updateTodoState.isLoading}
       checked={todoItem.isDone}
       onChange={() => toggleCompleteTodo(todoItem)}
     />
@@ -48,10 +51,17 @@ TodoItem.propTypes = {
     isLoading: PropTypes.bool,
     errorMessage: PropTypes.string,
   }),
+  updateTodoState: PropTypes.shape({
+    id: PropTypes.number,
+    state: PropTypes.string,
+    isLoading: PropTypes.bool,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 TodoItem.defaultProps = {
   deleteTodoState: {},
+  updateTodoState: {},
 };
 
 export default memo(TodoItem);

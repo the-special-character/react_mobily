@@ -1,5 +1,36 @@
 {
-  "todoList": [],
+  "todoList": [
+    {
+      "text": "get todo",
+      "isDone": true,
+      "id": 1
+    },
+    {
+      "text": "asdf",
+      "isDone": true,
+      "id": 2
+    },
+    {
+      "text": "asdf",
+      "isDone": true,
+      "id": 3
+    },
+    {
+      "text": "asdf",
+      "isDone": true,
+      "id": 4
+    },
+    {
+      "text": "asdf",
+      "isDone": true,
+      "id": 5
+    },
+    {
+      "text": "asdf",
+      "isDone": true,
+      "id": 6
+    }
+  ],
   "user": {
     "name": "yagnesh",
     "age": 33,
