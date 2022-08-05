@@ -1,14 +1,8 @@
 {
-    "todoList": [
-        {
-            "id": 1,
-            "task": "get milk",
-            "isDone": false
-        }
-    ],
-    "user": {
-        "name": "yagnesh",
-        "age": 33,
-        "gender": "male"
-    }
+  "todoList": [],
+  "user": {
+    "name": "yagnesh",
+    "age": 33,
+    "gender": "male"
+  }
 }
