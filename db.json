@@ -16,9 +16,12 @@
       "id": 13
     }
   ],
-  "user": {
-    "name": "yagnesh",
-    "age": 33,
-    "gender": "male"
-  }
+  "users": [
+    {
+      "email": "yagnesh.modh@gmail.com",
+      "password": "$2a$10$DHoDM99oX0gkqK3q2vu.BuvvEJyaTJFBxvl0v5tOHbgsrcSD/pR0e",
+      "name": "YAGNESH MODH",
+      "id": 1
+    }
+  ]
 }

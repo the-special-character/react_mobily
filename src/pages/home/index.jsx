@@ -1,21 +1,15 @@
 import React from 'react';
-import { ThemeContext } from '../../context/themeContext';
+import { AuthContext } from '../../context/authContext';
 
 const Home = () => (
   <div>
-    <ThemeContext.Consumer>
-      {({ theme, setTheme }) => (
-        <div>
-          <h1>{`Your current theme is ${theme}`}</h1>
-          <button
-            type="button"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          >
-            Change Theme
-          </button>
-        </div>
+    <AuthContext.Consumer>
+      {({ logout }) => (
+        <button type="button" onClick={logout}>
+          Logout
+        </button>
       )}
-    </ThemeContext.Consumer>
+    </AuthContext.Consumer>
   </div>
 );
 

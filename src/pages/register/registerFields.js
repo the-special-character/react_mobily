@@ -5,7 +5,6 @@ export const registerInitialValues = {
   email: '',
   password: '',
   confirm_password: '',
-  age: 0,
 };
 
 export const registerFields = [
@@ -28,19 +27,6 @@ export const registerFields = [
     autoComplete: 'email',
     type: 'email',
     placeholder: 'Email address',
-    component: Input,
-    validate: value => {
-      if (!value) {
-        return 'Required...';
-      }
-      return '';
-    },
-  },
-  {
-    name: 'age',
-    id: 'age',
-    type: 'number',
-    placeholder: 'Age',
     component: Input,
     validate: value => {
       if (!value) {
@@ -74,6 +60,7 @@ export const registerFields = [
       if (!value) {
         return 'Required...';
       }
+      // eslint-disable-next-line no-undef
       if (value !== password.value) {
         return 'password should match confirm password...';
       }
