@@ -23,11 +23,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const { confirm_password, ...rest } = values;
       const res = await axiosInstance.post('register', rest);
-      sessionStorage.setItem('@appname/user', JSON.stringify(res.data));
+      sessionStorage.setItem('@appname/user', JSON.stringify(res));
       action.resetForm();
-      setUser(res.data);
+      setUser(res);
     } catch (error) {
-      action.setFieldError('serverError', error.response.data);
+      action.setFieldError('serverError', error.message);
     }
   }, []);
 
@@ -35,11 +35,11 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log(action);
       const res = await axiosInstance.post('login', values);
-      sessionStorage.setItem('@appname/user', JSON.stringify(res.data));
+      sessionStorage.setItem('@appname/user', JSON.stringify(res));
       action.resetForm();
-      setUser(res.data);
+      setUser(res);
     } catch (error) {
-      action.setFieldError('serverError', error.response.data);
+      action.setFieldError('serverError', error.message);
     }
   }, []);
 

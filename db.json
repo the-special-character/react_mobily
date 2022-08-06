@@ -265,5 +265,17 @@
         "count": 145
       }
     }
+  ],
+  "cart": [
+    {
+      "productId": 3,
+      "quantity": 1,
+      "id": 3
+    },
+    {
+      "productId": 1,
+      "quantity": 1,
+      "id": 4
+    }
   ]
 }

@@ -1,7 +1,8 @@
 import React, { Fragment, useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { ShoppingBagIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { AuthContext } from '../context/authContext';
 
 const navigation = [
@@ -15,7 +16,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const MainLayout = () => {
+const MainLayout = ({ cart }) => {
   const { user, logout } = useContext(AuthContext);
 
   if (!user) {
@@ -75,10 +76,16 @@ const MainLayout = () => {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <button
                     type="button"
-                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    className="flex items-center bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                   >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    <ShoppingBagIcon
+                      className="flex-shrink-0 h-6 w-6"
+                      aria-hidden="true"
+                    />
+                    <span className="ml-2 text-sm font-medium">
+                      {cart.reduce((p, c) => p + c.quantity, 0)}
+                    </span>
+                    <span className="sr-only">items in cart, view bag</span>
                   </button>
 
                   {/* Profile dropdown */}
@@ -179,4 +186,8 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps)(MainLayout);
