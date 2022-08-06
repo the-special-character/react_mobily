@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import useAppState from '../hooks/useAppState';
 import axiosInstance from '../utils/axiosInstance';
 import './style.css';
 import TodoFilter from './todoFilter';
@@ -8,37 +15,11 @@ import TodoList from './todoList';
 const Todo = () => {
   const [todoList, setTodoList] = useState([]);
   const [filterType, setFilterType] = useState('all');
-  const [appState, setAppState] = useState([]);
+  const { appState, loadingState, successState, errorState } = useAppState();
+
   const todoTextRef = useRef();
 
-  const loadingState = ({ id, state }) => {
-    setAppState(val => [
-      ...val,
-      {
-        id,
-        state,
-        isLoading: true,
-        errorMessage: '',
-      },
-    ]);
-  };
-
-  const successState = ({ state, id }) => {
-    setAppState(val => val.filter(x => !(x.state === state && x.id === id)));
-  };
-
-  const errorState = ({ state, error, id }) => {
-    setAppState(val =>
-      val.map(x => {
-        if (x.state === state && x.id === id) {
-          return { ...x, isLoading: false, errorMessage: error.message };
-        }
-        return x;
-      }),
-    );
-  };
-
-  const loadTodo = async ft => {
+  const loadTodo = useCallback(async ft => {
     const state = 'load_todo';
 
     loadingState({ state });
@@ -61,9 +42,9 @@ const Todo = () => {
     } catch (error) {
       errorState({ state, error });
     }
-  };
+  }, []);
 
-  const addTodo = async event => {
+  const addTodo = useCallback(async event => {
     event.preventDefault();
     const state = 'add_todo';
     loadingState({ state });
@@ -80,9 +61,9 @@ const Todo = () => {
     } catch (error) {
       errorState({ state, error });
     }
-  };
+  }, []);
 
-  const deleteTodo = async todoItem => {
+  const deleteTodo = useCallback(async todoItem => {
     const state = 'delete_todo';
     loadingState({ state, id: todoItem.id });
     try {
@@ -97,9 +78,9 @@ const Todo = () => {
     } catch (error) {
       errorState({ state, id: todoItem.id, error });
     }
-  };
+  }, []);
 
-  const toggleCompleteTodo = async todoItem => {
+  const toggleCompleteTodo = useCallback(async todoItem => {
     const state = 'update_todo';
     loadingState({ state, id: todoItem.id });
     try {
@@ -117,19 +98,31 @@ const Todo = () => {
     } catch (error) {
       errorState({ state, id: todoItem.id, error });
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadTodo('all');
   }, []);
 
-  const loadTodoState = appState.find(x => x.state === 'load_todo');
+  const loadTodoState = useMemo(
+    () => appState.find(x => x.state === 'load_todo'),
+    [appState],
+  );
 
-  const addTodoState = appState.find(x => x.state === 'add_todo');
+  const addTodoState = useMemo(
+    () => appState.find(x => x.state === 'add_todo'),
+    [appState],
+  );
 
-  const deleteTodoState = appState.filter(x => x.state === 'delete_todo');
+  const deleteTodoState = useMemo(
+    () => appState.filter(x => x.state === 'delete_todo'),
+    [appState],
+  );
 
-  const updateTodoState = appState.filter(x => x.state === 'update_todo');
+  const updateTodoState = useMemo(
+    () => appState.filter(x => x.state === 'update_todo'),
+    [appState],
+  );
 
   if (!loadTodoState?.isLoading && loadTodoState?.errorMessage) {
     return <h1>{loadTodoState?.errorMessage}</h1>;
