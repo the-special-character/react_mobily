@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
 import { connect } from 'react-redux';
 import { loadProducts } from '../../actions/productsActions';
@@ -8,6 +8,9 @@ import {
   loadCart,
   updateCart,
 } from '../../actions/cartActions';
+// import ActionButtons from '../../components/actionButtons';
+
+const ActionButtons = lazy(() => import('../../components/actionButtons'));
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -92,39 +95,13 @@ const Home = ({
 
               <div className="mt-6">
                 {cartItem ? (
-                  <div className="flex items-center">
-                    <button
-                      type="submit"
-                      className="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={() =>
-                        updateCart({
-                          ...cartItem,
-                          quantity: cartItem.quantity + 1,
-                        })
-                      }
-                    >
-                      +
-                    </button>
-                    <span className="font-bold text-2xl px-5">
-                      {cartItem.quantity}
-                    </span>
-                    <button
-                      type="submit"
-                      className="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={() => {
-                        if (cartItem.quantity > 1) {
-                          updateCart({
-                            ...cartItem,
-                            quantity: cartItem.quantity - 1,
-                          });
-                        } else {
-                          deleteCart(cartItem);
-                        }
-                      }}
-                    >
-                      -
-                    </button>
-                  </div>
+                  <Suspense fallback={<div>loading...</div>}>
+                    <ActionButtons
+                      cartItem={cartItem}
+                      deleteCart={deleteCart}
+                      updateCart={updateCart}
+                    />
+                  </Suspense>
                 ) : (
                   <button
                     type="submit"
