@@ -1,8 +1,12 @@
 import React from 'react';
+import { ThemeContext } from '../../context/themeContext';
 
 const Login = () => (
   <form className="mt-8 space-y-6" action="#" method="POST">
     <input type="hidden" name="remember" defaultValue="true" />
+    <ThemeContext.Consumer>
+      {value => <h1>{`Your current theme is ${value.theme}`}</h1>}
+    </ThemeContext.Consumer>
     <div className="rounded-md shadow-sm -space-y-px">
       <div>
         <label htmlFor="email-address" className="sr-only">
