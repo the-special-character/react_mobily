@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/the-special-character/react_mobily#readme",
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@heroicons/react": "^1.0.6",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "prop-types": "^15.8.1",
