@@ -4,8 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
+    publicPath: '/',
   },
   mode: 'development',
   resolve: {
@@ -35,5 +36,6 @@ module.exports = {
   ],
   devServer: {
     open: true,
+    historyApiFallback: true,
   },
 };

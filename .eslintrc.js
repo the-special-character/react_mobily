@@ -16,5 +16,6 @@ module.exports = {
   rules: {
     'react/function-component-definition': 0,
     'react/jsx-props-no-spreading': 0,
+    'jsx-a11y/label-has-associated-control': 0,
   },
 };
