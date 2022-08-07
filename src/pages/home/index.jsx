@@ -1,13 +1,8 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
 import { connect } from 'react-redux';
-import { loadProducts } from '../../actions/productsActions';
-import {
-  addToCart,
-  deleteCart,
-  loadCart,
-  updateCart,
-} from '../../actions/cartActions';
+
+import Modal from '../../components/modal';
 // import ActionButtons from '../../components/actionButtons';
 
 const ActionButtons = lazy(() => import('../../components/actionButtons'));
@@ -25,10 +20,12 @@ const Home = ({
   deleteCart,
   cart,
 }) => {
+  console.log('products', products);
+
   useEffect(() => {
     loadProducts();
     loadCart();
-  }, []);
+  }, [loadProducts, loadCart]);
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -40,6 +37,9 @@ const Home = ({
             key={product.id}
             className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8"
           >
+            <Modal>
+              <h1>Hello from modal</h1>
+            </Modal>
             <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-3">
               <img
                 src={product.image}
@@ -126,11 +126,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadProducts: () => loadProducts()(dispatch),
-  loadCart: () => loadCart()(dispatch),
-  addToCart: product => addToCart(product)(dispatch),
-  updateCart: cart => updateCart(cart)(dispatch),
-  deleteCart: cart => deleteCart(cart)(dispatch),
+  loadProducts: () => dispatch({ type: 'LOAD_PRODUCTS_REQUEST' }),
+  loadCart: () => dispatch({ type: 'LOAD_CART_REQUEST' }),
+  addToCart: product =>
+    dispatch({ type: 'ADD_CART_REQUEST', payload: product }),
+  updateCart: cart => dispatch({ type: 'UPDATE_CART_REQUEST', payload: cart }),
+  deleteCart: cart => dispatch({ type: 'DELETE_CART_REQUEST', payload: cart }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
